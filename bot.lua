@@ -7,7 +7,9 @@ client:on("ready", function()
 end)
 
 client:on("messageCreate", function(message)
-    commands.registry.processMessage(message)
+    if message.author.id ~= client.user.id then
+        commands.registry.processMessage(message)
+    end
 end)
 
 client:run("Bot " .. token)
