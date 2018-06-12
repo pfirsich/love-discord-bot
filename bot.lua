@@ -1,5 +1,6 @@
 local discordia = require("discordia")
 local token = require("token")
+local commands = require("commands")
 
 local client = discordia.Client()
 
@@ -8,9 +9,7 @@ client:on("ready", function()
 end)
 
 client:on("messageCreate", function(message)
-    if message.content == "!ping" then
-        message.channel:send("Pong!")
-    end
+    commands.registry.processMessage(message)
 end)
 
 client:run("Bot " .. token)
