@@ -1,7 +1,8 @@
 local registry = require("./registry")
 local util = require("./util")
 
-local repoUrl = "https://github.com/pfirsich/love-discord-bot.git"
+local githubUrl = "https://github.com/pfirsich/love-discord-bot"
+local repoUrl = githubUrl .. ".git"
 
 local function exec(cmd)
     local p, err = io.popen(cmd)
@@ -31,5 +32,5 @@ registry.add(util.noArgPatterns("info"), function(message)
     local commit = extractCommit(exec("git rev-parse HEAD"))
     local remoteCommit = extractCommit(exec(("git ls-remote \"%s\" refs/heads/master"):format(repoUrl)))
     return ("Discord bot for the löve community.\n%s\n\nCurrent version: `%s`\nCurrent version on remote: `%s`"):format(
-        repoUrl, commit, remoteCommit)
+        githubUrl, commit, remoteCommit)
 end, "!info", "Displays information (including current version) about the bot.")
