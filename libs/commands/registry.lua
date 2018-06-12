@@ -30,8 +30,18 @@ function registry.processMessage(message)
     end
 end
 
+local function entryCmp(a, b)
+    if a.commandName == nil then
+        return true
+    elseif b.commandName == nil then
+        return false
+    else
+        return a.commandName < b.commandName
+    end
+end
+
 registry.add("^!help%s*.*", function()
-    table.sort(entries, function(a, b) return a.commandName < b.commandName end)
+    table.sort(entries, entryCmp)
     local ret = ""
     for _, entry in ipairs(entries) do
         if entry.commandName then

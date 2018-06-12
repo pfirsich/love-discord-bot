@@ -30,6 +30,10 @@ local loveModules = {
 -- before the others and therefore the one the short module name version is replaced with, e.g.
 -- love.timer is listed before love.thread so "lt." is replaced to "love.timer"
 
+registry.add("^!wiki$", function()
+    return "Please pass an argument, e.g.: `!wiki love.data.pack` or `!wiki ld.pack` or `!wiki data.pack`"
+end)
+
 registry.add("^!wiki%s+(.+)", function(message, page)
     for _, mod in ipairs(loveModules) do
         -- replace e.g. "lg." with "love.graphics."
@@ -39,7 +43,7 @@ registry.add("^!wiki%s+(.+)", function(message, page)
         end
     end
     return "https://love2d.org/wiki/" .. page
-end, "!wiki", "Look up löve command link on the wiki. E.g.: `!wiki love.data.pack` or `!wiki ld.pack` or `!wiki data.pack`")
+end, "!wiki <page>", "Look up a page on the löve wiki, e.g.: `!wiki love.data.pack` or `!wiki ld.pack`, `!wiki data.pack` or `!wiki Canvas`")
 
 local function charToHex(char)
     return ("%%%02X"):format(char:byte())
@@ -60,6 +64,10 @@ local function urlEncode(str)
     return str
 end
 
+registry.add("^!wikisearch$", function()
+    return "Please pass an argument, e.g.: `!wikisearch setColor`"
+end)
+
 registry.add("^!wikisearch%s+(.+)", function(message, query)
     return "https://love2d.org/w/index.php?title=Special%3ASearch&go=Go&search=" .. urlEncode(query)
-end, "!wikisearch", "Search the wiki. E.g.: `!wikisearch setColor`")
+end, "!wikisearch <query>", "Search the wiki, e.g.: `!wikisearch setColor`")
