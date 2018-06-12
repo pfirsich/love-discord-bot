@@ -1,4 +1,5 @@
 local registry = require("./registry")
+local util = require("./util")
 
 local repoUrl = "https://github.com/pfirsich/love-discord-bot.git"
 
@@ -25,7 +26,7 @@ local function extractCommit(str)
     return str
 end
 
-registry.add({"^!info$", "^!info%s+.*"}, function(message)
+registry.add(util.noArgPatterns("info"), function(message)
     -- This makes a request to the internet, so this is pretty slow (and blocking?)
     local commit = extractCommit(exec("git rev-parse HEAD"))
     local remoteCommit = extractCommit(exec(("git ls-remote \"%s\" refs/heads/master"):format(repoUrl)))

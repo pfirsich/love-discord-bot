@@ -1,9 +1,19 @@
 local registry = require("./registry")
+local util = require("./util")
 
-registry.add("^!lua$", function()
+local baseUrl = "https://www.lua.org/manual/5.1/manual.html#"
+
+registry.add(util.oneArgErrorPatterns({"lua", "manual"}), function()
     return "Please pass an argument, e.g.: `!lua io.open`"
 end)
 
-registry.add("^!lua%s+(.+)", function(message, func)
-    return "https://www.lua.org/manual/5.1/manual.html#pdf-" .. func
-end, "!lua <function>", "Look up the documentation on a lua function, e.g.: `!lua io.open`")
+registry.add(util.oneArgPatterns({"lua", "manual"}), function(message, func)
+    if func:lower() == "pil" then
+        return "https://www.lua.org/pil/contents.html"
+    end
+    if func:match("%d%.?%d?%d?%.?%d?") then
+        return baseUrl .. func
+    else
+        return baseUrl .. "pdf-" .. func
+    end
+end, "!lua <function>, lua:<function>, !man <function>, man:<function>, !manual <function>, manual:<function>", "Look up the documentation on a lua function, e.g.: `!lua io.open`")

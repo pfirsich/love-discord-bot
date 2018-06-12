@@ -1,4 +1,5 @@
 local registry = require("./registry")
+local util = require("./util")
 
 local loveModules = {
     "audio",
@@ -30,11 +31,11 @@ local loveModules = {
 -- before the others and therefore the one the short module name version is replaced with, e.g.
 -- love.timer is listed before love.thread so "lt." is replaced to "love.timer"
 
-registry.add("^!wiki$", function()
+registry.add(util.oneArgErrorPatterns({"wiki", "love"}), function()
     return "Please pass an argument, e.g.: `!wiki love.data.pack` or `!wiki ld.pack` or `!wiki data.pack`"
 end)
 
-registry.add({"^!wiki%s+(.+)", "wiki:(%S+)%s.*", "wiki:(%S+)$"}, function(message, page)
+registry.add(util.oneArgPatterns({"wiki", "love"}), function(message, page)
     for _, mod in ipairs(loveModules) do
         -- replace e.g. "lg." with "love.graphics."
         page = page:gsub("^l" .. mod:sub(1,1) .. "%.", "love." .. mod .. ".")
@@ -45,7 +46,7 @@ registry.add({"^!wiki%s+(.+)", "wiki:(%S+)%s.*", "wiki:(%S+)$"}, function(messag
     page = page:gsub("^[Ii]mage:", "(Image):")
     page = page:gsub("^[Ff]ile:", "(File):")
     return "https://love2d.org/wiki/" .. page
-end, "!wiki <page> or (in text) wiki:<page>", "Look up a page on the löve wiki, e.g.: `!wiki love.data.pack` or `!wiki ld.pack`, `!wiki data.pack` or `!wiki Canvas` or `have a look at wiki:Canvas`")
+end, "!wiki <page>, wiki:<page>, !love <page>, love:<page>", "Look up a page on the löve wiki, e.g.: `!wiki love.data.pack` or `!wiki ld.pack`, `!wiki data.pack` or `!wiki Canvas` or `have a look at wiki:Canvas`")
 
 local function charToHex(char)
     return ("%%%02X"):format(char:byte())
@@ -66,10 +67,10 @@ local function urlEncode(str)
     return str
 end
 
-registry.add("^!wikisearch$", function()
+registry.add(util.oneArgErrorPatterns("wikisearch"), function()
     return "Please pass an argument, e.g.: `!wikisearch setColor`"
 end)
 
-registry.add("^!wikisearch%s+(.+)", function(message, query)
+registry.add(util.oneArgPatterns("wikisearch"), function(message, query)
     return "https://love2d.org/w/index.php?title=Special%3ASearch&go=Go&search=" .. urlEncode(query)
-end, "!wikisearch <query>", "Search the wiki, e.g.: `!wikisearch setColor`")
+end, "!wikisearch <query>, wikisearch:<page>", "Search the wiki, e.g.: `!wikisearch setColor`")

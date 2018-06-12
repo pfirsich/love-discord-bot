@@ -1,4 +1,5 @@
 local registry = require("./registry")
+local util = require("./util")
 
 local shortcuts = {
     ["dataja"] = {expansion = "Don't ask to ask, just ask! - http://sol.gfxile.net/dontask.html"}
@@ -7,8 +8,7 @@ local shortcuts = {
 }
 
 for short, data in pairs(shortcuts) do
-    local patterns = {"^!" .. short .. "$", "^!" .. short .. "%s+.*"}
-    registry.add(patterns, function()
+    registry.add(util.noArgPatterns(short), function()
         return data.expansion
     end, "!" .. short, data.helpText or data.expansion)
 end
