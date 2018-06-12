@@ -1,8 +1,6 @@
-local discordia = require("discordia")
+local client = require("./client")
 local token = require("token")
 local commands = require("commands")
-
-local client = discordia.Client()
 
 client:on("ready", function()
     print("Logged in as ".. client.user.username)
