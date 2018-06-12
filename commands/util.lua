@@ -26,8 +26,8 @@ end
 function util.oneArgPatterns(names, noInText)
     local templates = {"^!{name}%s+(.+)"}
     if not noInText then
-        table.insert(templates, "{name}:(%S+)%s.*")
-        table.insert(templates, "{name}:(%S+)[!%?%.]?$")
+        table.insert(templates, "{name}:(%S+)[%s!%?%.,].*")
+        table.insert(templates, "{name}:(%S+)$")
     end
     return genPatterns(templates, names)
 end
