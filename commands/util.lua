@@ -8,7 +8,8 @@ local function genPatterns(templates, names)
     local ret = {}
     for _, name in ipairs(names) do
         for _, template in ipairs(templates) do
-            table.insert(ret, template:gsub("{name}", name))
+            local pattern = template:gsub("{name}", name)
+            table.insert(ret, pattern)
         end
     end
     return ret
