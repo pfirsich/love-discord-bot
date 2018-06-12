@@ -16,4 +16,4 @@ registry.add(util.oneArgPatterns({"lua", "manual"}), function(message, func)
     else
         return baseUrl .. "pdf-" .. func
     end
-end, "!lua <function>, lua:<function>, !man <function>, man:<function>, !manual <function>, manual:<function>", "Look up the documentation on a lua function, e.g.: `!lua io.open`")
+end, "!lua <function>, lua:<function>, !manual <function>, manual:<function>", "Look up the documentation on a lua function, e.g.: `!lua io.open`")
