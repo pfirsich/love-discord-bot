@@ -34,7 +34,7 @@ registry.add("^!wiki$", function()
     return "Please pass an argument, e.g.: `!wiki love.data.pack` or `!wiki ld.pack` or `!wiki data.pack`"
 end)
 
-registry.add("^!wiki%s+(.+)", function(message, page)
+registry.add({"^!wiki%s+(.+)", "wiki:(%S+)%s.*", "wiki:(%S+)$"}, function(message, page)
     for _, mod in ipairs(loveModules) do
         -- replace e.g. "lg." with "love.graphics."
         page = page:gsub("^l" .. mod:sub(1,1) .. "%.", "love." .. mod .. ".")
@@ -42,8 +42,10 @@ registry.add("^!wiki%s+(.+)", function(message, page)
             page = "love." .. page
         end
     end
+    page = page:gsub("^[Ii]mage:", "(Image):")
+    page = page:gsub("^[Ff]ile:", "(File):")
     return "https://love2d.org/wiki/" .. page
-end, "!wiki <page>", "Look up a page on the löve wiki, e.g.: `!wiki love.data.pack` or `!wiki ld.pack`, `!wiki data.pack` or `!wiki Canvas`")
+end, "!wiki <page> or (in text) wiki:<page>", "Look up a page on the löve wiki, e.g.: `!wiki love.data.pack` or `!wiki ld.pack`, `!wiki data.pack` or `!wiki Canvas` or `have a look at wiki:Canvas`")
 
 local function charToHex(char)
     return ("%%%02X"):format(char:byte())
