@@ -1,24 +1,24 @@
 local noArgPatterns = {
-    "!cmd[%s!%?%.,].*",
-    "!cmd$",
+    "!{name}$",
+    "!{name}%W*",
 }
 
 local argPatterns = {
-    "!cmd%s+(%S+)[%s!%?%.,].*",
-    "!cmd%s+(%S+)$",
-    "^cmd:(%S+)[%s!%?%.,].*",
-    "%scmd:(%S+)[%s!%?%.,].*",
-    "^cmd:(%S+)$",
-    "%scmd:(%S+)$",
+    "^!{name}%s+(.+)$",
+
+    "^{name}:(%S*)[,!%s%?]",
+    "^{name}:(%S*)$",
+    "%s{name}:(%S*)[,!%s%?]",
+    "%s{name}:(%S*)$",
 }
 
 local argErrorPatterns = {
-    "!cmd$",
-    "!cmd[%s!%?%.,].*",
-    "^cmd:$",
-    "%scmd:$",
-    "^cmd:[%s!%?%.,].*",
-    "%scmd:[%s!%?%.,].*",
+    "!{name}$",
+
+    "^{name}:$",
+    "%s{name}:$",
+    "^{name}:[,!%s%?].*",
+    "%s{name}:[,!%s%?].*",
 }
 
 local function matchAll(str, patterns)
@@ -52,43 +52,35 @@ local function checkArgError(str, noMatch)
     end
 end
 
-checkNoArg("!cmd")
-checkNoArg("Test !cmd")
-checkNoArg("Test !cmd!")
-checkNoArg("Test !cmd.")
-checkNoArg("Test !cmd, blabla")
-checkNoArg("Test !cmd?")
-checkNoArg("Test !cmd blabla")
+checkNoArg("!{name}")
+checkNoArg("!{name} arg")
+checkNoArg("!{name} arg.arg")
 
-checkArg("!cmd arg")
-checkArg("Test !cmd arg")
-checkArg("!cmd arg!")
-checkArg("Test !cmd arg!")
-checkArg("!cmd arg.")
-checkArg("!cmd arg?")
-checkArg("!cmd arg is fine")
+checkArg("{name}:arg")
+checkArg("{name}:arg.arg", "arg.arg")
+checkArg("{name}:arg is the answer")
+checkArg("{name}:arg.arg is the answer", "arg.arg")
+checkArg("Test {name}:arg")
+checkArg("Test {name}:arg.arg", "arg.arg")
+checkArg("{name}:arg!")
+checkArg("{name}:arg.arg!", "arg.arg")
+checkArg("Test {name}:arg!")
+checkArg("Test {name}:arg.arg!", "arg.arg")
+checkArg("{name}:arg.")
+checkArg("{name}:arg.arg.", "arg.arg")
+checkArg("{name}:arg.....")
+checkArg("{name}:arg.arg....", "arg.arg")
+checkArg("Test {name}:arg?")
+checkArg("Test {name}:arg.arg?", "arg.arg")
+checkArg("Test {name}:arg.")
+checkArg("Test {name}:arg.arg.", "arg.arg")
+checkArg("Test {name}:arg.....")
+checkArg("Test {name}:arg.arg....", "arg.arg")
 
-checkArg("cmd:arg")
-checkArg("cmd:arg is the answer")
-checkArg("Test cmd:arg")
-checkArg("cmd:arg!")
-checkArg("Test cmd:arg!")
-checkArg("cmd:arg.")
-checkArg("cmd:arg.....")
-checkArg("Test cmd:arg?")
-checkArg("Test cmd:arg.")
-checkArg("Test cmd:arg.....")
-
-checkArgError("!cmd")
-checkArgError("!cmd!")
-checkArgError("Blabla !cmd!")
-checkArgError("Blabla !cmd!")
-checkArgError("Blabla !cmd.")
-checkArgError("Blabla !cmd....")
-checkArgError("Blabla !cmdblabla", true)
-checkArgError("cmd:")
-checkArgError("cmd:.")
-checkArgError("cmd:?")
-checkArgError("cmd:!")
-checkArgError("cmd: blabla")
-checkArgError("bloblocmd: blabla", true)
+checkArgError("!{name}")
+checkArgError("{name}:")
+checkArgError("{name}:.")
+checkArgError("{name}:?")
+checkArgError("{name}:!")
+checkArgError("{name}: blabla")
+checkArgError("bloblo{name}: blabla", true)

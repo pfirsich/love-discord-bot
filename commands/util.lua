@@ -16,29 +16,29 @@ local function genPatterns(templates, names)
 end
 
 function util.oneArgErrorPatterns(names, noInText)
-    local templates = {"!{name}$", "!{name}[%s!%?%.,].*"}
+    local templates = {"!{name}$"}
     if not noInText then
         table.insert(templates, "^{name}:$")
         table.insert(templates, "%s{name}:$")
-        table.insert(templates, "^{name}:[%s!%?%.,].*")
-        table.insert(templates, "%s{name}:[%s!%?%.,].*")
+        table.insert(templates, "^{name}:[,!%s%?].*")
+        table.insert(templates, "%s{name}:[,!%s%?].*")
     end
     return genPatterns(templates, names)
 end
 
 function util.oneArgPatterns(names, noInText)
-    local templates = {"!{name}%s+(%S+)[%s!%?%.,].*", "!{name}%s+(%S+)$"}
+    local templates = {"^!{name}%s+(.+)$"}
     if not noInText then
-        table.insert(templates, "^{name}:(%S+)[%s!%?%.,].*")
-        table.insert(templates, "%s{name}:(%S+)[%s!%?%.,].*")
-        table.insert(templates, "^{name}:(%S+)$")
-        table.insert(templates, "%s{name}:(%S+)$")
+        table.insert(templates, "^{name}:(%S*)[,!%s%?]")
+        table.insert(templates, "^{name}:(%S*)$")
+        table.insert(templates, "%s{name}:(%S*)[,!%s%?]")
+        table.insert(templates, "%s{name}:(%S*)$")
     end
     return genPatterns(templates, names)
 end
 
 function util.noArgPatterns(names)
-    return genPatterns({"!{name}$", "!{name}[%s!%?%.,].*"}, names)
+    return genPatterns({"!{name}$", "!{name}%W*"}, names)
 end
 
 return util
