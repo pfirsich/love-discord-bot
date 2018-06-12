@@ -29,10 +29,10 @@ end
 function util.oneArgPatterns(names, noInText)
     local templates = {"!cmd%s+(%S+)[%s!%?%.,].*", "!cmd%s+(%S+)$"}
     if not noInText then
-        table.insert(tempmlates, "^cmd:(%S+)[%s!%?%.,].*")
-        table.insert(tempmlates, "%scmd:(%S+)[%s!%?%.,].*")
-        table.insert(tempmlates, "^cmd:(%S+)$")
-        table.insert(tempmlates, "%scmd:(%S+)$")
+        table.insert(templates, "^cmd:(%S+)[%s!%?%.,].*")
+        table.insert(templates, "%scmd:(%S+)[%s!%?%.,].*")
+        table.insert(templates, "^cmd:(%S+)$")
+        table.insert(templates, "%scmd:(%S+)$")
     end
     return genPatterns(templates, names)
 end
