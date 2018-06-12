@@ -16,24 +16,29 @@ local function genPatterns(templates, names)
 end
 
 function util.oneArgErrorPatterns(names, noInText)
-    local templates = {"^!{name}$"}
+    local templates = {"!cmd$", "!cmd[%s!%?%.,].*"}
     if not noInText then
-        table.insert(templates, "{name}:$")
+        table.insert(templates, "^cmd:$")
+        table.insert(templates, "%scmd:$")
+        table.insert(templates, "^cmd:[%s!%?%.,].*")
+        table.insert(templates, "%scmd:[%s!%?%.,].*")
     end
     return genPatterns(templates, names)
 end
 
 function util.oneArgPatterns(names, noInText)
-    local templates = {"^!{name}%s+(.+)"}
+    local templates = {"!cmd%s+(%S+)[%s!%?%.,].*", "!cmd%s+(%S+)$"}
     if not noInText then
-        table.insert(templates, "{name}:(%S+)[%s!%?%.,].*")
-        table.insert(templates, "{name}:(%S+)$")
+        table.insert(tempmlates, "^cmd:(%S+)[%s!%?%.,].*")
+        table.insert(tempmlates, "%scmd:(%S+)[%s!%?%.,].*")
+        table.insert(tempmlates, "^cmd:(%S+)$")
+        table.insert(tempmlates, "%scmd:(%S+)$")
     end
     return genPatterns(templates, names)
 end
 
 function util.noArgPatterns(names)
-    return genPatterns({"^!{name}$", "^!{name}%s+.*"}, names)
+    return genPatterns({"!{name}$", "!{name}[%s!%?%.,].*"}, names)
 end
 
 return util
