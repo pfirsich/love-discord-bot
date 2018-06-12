@@ -2,8 +2,9 @@ local commands = {}
 
 commands.registry = require("./registry")
 
-require("./wiki")
+require("./info")
 require("./lua")
+require("./wiki")
 require("./shortcut")
 
 return commands

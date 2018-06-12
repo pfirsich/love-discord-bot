@@ -30,7 +30,7 @@ local loveModules = {
 -- before the others and therefore the one the short module name version is replaced with, e.g.
 -- love.timer is listed before love.thread so "lt." is replaced to "love.timer"
 
-registry.add("^!wiki%s*(.+)", function(message, page)
+registry.add("^!wiki%s+(.+)", function(message, page)
     for _, mod in ipairs(loveModules) do
         -- replace e.g. "lg." with "love.graphics."
         page = page:gsub("^l" .. mod:sub(1,1) .. "%.", "love." .. mod .. ".")
@@ -60,6 +60,6 @@ local function urlEncode(str)
     return str
 end
 
-registry.add("^!wikisearch%s*+(.+)", function(message, query)
+registry.add("^!wikisearch%s+(.+)", function(message, query)
     return "https://love2d.org/w/index.php?title=Special%3ASearch&go=Go&search=" .. urlEncode(query)
 end, "!wikisearch", "Search the wiki. E.g.: `!wikisearch setColor`")

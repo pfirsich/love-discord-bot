@@ -2,9 +2,13 @@ local registry = {}
 
 local entries = {}
 
-function registry.add(pattern, func, commandName, helpText)
+function registry.add(patterns, func, commandName, helpText)
+    if type(patterns) ~= "table" then
+        patterns = {patterns}
+    end
+
     table.insert(entries, {
-        pattern = pattern,
+        patterns = patterns,
         func = func,
         commandName = commandName,
         helpText = helpText,
@@ -13,11 +17,14 @@ end
 
 function registry.processMessage(message)
     for _, entry in ipairs(entries) do
-        local match = {message.content:match(entry.pattern)}
-        if #match > 0 then
-            local response = entry.func(message, unpack(match))
-            if response then
-                message.channel:send(response)
+        for _, pattern in ipairs(entry.patterns) do
+            local match = {message.content:match(pattern)}
+            if #match > 0 then
+                local response = entry.func(message, unpack(match))
+                if response then
+                    message.channel:send(response)
+                end
+                break
             end
         end
     end
@@ -27,7 +34,9 @@ registry.add("^!help%s*.*", function()
     table.sort(entries, function(a, b) return a.commandName < b.commandName end)
     local ret = ""
     for _, entry in ipairs(entries) do
-        ret = ret .. ("**%s**: %s\n"):format(entry.commandName, entry.helpText)
+        if entry.commandName then
+            ret = ret .. ("**%s**: %s\n"):format(entry.commandName, entry.helpText or "")
+        end
     end
     return ret
 end, "!help", "Display this help")
