@@ -1,6 +1,6 @@
 local client = require("./client")
-local token = require("token")
-local commands = require("commands")
+local token = require("./token")
+local commands = require("./commands")
 
 client:on("ready", function()
     print("Logged in as ".. client.user.username)
