@@ -6,7 +6,7 @@ local responses = {
     "This is none of my business.",
     "What do I've got to do with it?",
     "I am busy with important bot business.",
-    "I do no wish to convers with lesser creatures such as you, <username>.",
+    "I do no wish to converse with lesser creatures such as you, <username>.",
     "No.",
     "I really don't like <username> in particular.",
 }
