@@ -31,9 +31,11 @@ function registry.processMessage(message)
 end
 
 local function entryCmp(a, b)
-    if a.commandName == nil then
+    if not a.commandName and not b.commandName then
+        return false
+    elseif not a.commandName then
         return true
-    elseif b.commandName == nil then
+    elseif not b.commandName then
         return false
     else
         return a.commandName < b.commandName
