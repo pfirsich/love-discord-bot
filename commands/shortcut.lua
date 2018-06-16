@@ -2,13 +2,24 @@ local registry = require("./registry")
 local util = require("./util")
 
 local shortcuts = {
-    ["dataja"] = {expansion = "Don't ask to ask, just ask! - http://sol.gfxile.net/dontask.html"}
-    --["whatever"] = {expansion = "Whatever..", helpText = "Shows whatever"},
-    --["test"] = {expansion = "It works.", helpText = "Test if it works"},
+    {shortcut = "dataja", expansion = "Don't ask to ask, just ask! - http://sol.gfxile.net/dontask.html"},
+    {shortcut = {"ssl", "tls"}, expansion = "löve does not have built-in SSL/TLS, but you can use this library instead: https://github.com/LPGhatguy/luajit-request/\nBackground info on why TLS is not included can be found here: https://bitbucket.org/rude/love/issues/363/add-ssl-tls-apis"},
 }
 
-for short, data in pairs(shortcuts) do
-    registry.add(util.noArgPatterns(short), function()
-        return data.expansion
-    end, "!" .. short, data.helpText or data.expansion)
+local function joinShorcuts(shortcut)
+    if type(shortcut) == "string" then
+        return "!" .. shortcut
+    else
+        local mapped = {}
+        for _, item in ipairs(shortcut) do
+            table.insert(mapped, "!" .. item)
+        end
+        return table.concat(mapped, ", ")
+    end
+end
+
+for _, shortcut in ipairs(shortcuts) do
+    registry.add(util.noArgPatterns(shortcut.shortcut), function()
+        return shortcut.expansion
+    end, joinShorcuts(shortcut), shortcut.helpText or shortcut.expansion)
 end
