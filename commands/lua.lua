@@ -8,6 +8,7 @@ registry.add(util.oneArgErrorPatterns({"lua", "manual"}), function()
 end)
 
 registry.add(util.oneArgPatterns({"lua", "manual"}), function(message, func)
+    func = util.rtrim(func, "%.")
     if func:lower() == "pil" then
         return "https://www.lua.org/pil/contents.html"
     end

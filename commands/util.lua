@@ -41,4 +41,9 @@ function util.noArgPatterns(names)
     return genPatterns({"!{name}$", "!{name}%W*"}, names)
 end
 
+function util.rtrim(str, pat)
+    char = char or "%s"
+    return str:match("^([^" .. pat .. "]*)")
+end
+
 return util

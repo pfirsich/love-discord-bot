@@ -36,6 +36,7 @@ registry.add(util.oneArgErrorPatterns({"wiki", "love"}), function()
 end)
 
 registry.add(util.oneArgPatterns({"wiki", "love"}), function(message, page)
+    page = util.rtrim(page, "%.")
     for _, mod in ipairs(loveModules) do
         -- replace e.g. "lg." with "love.graphics."
         page = page:gsub("^l" .. mod:sub(1,1) .. "%.", "love." .. mod .. ".")
@@ -72,5 +73,6 @@ registry.add(util.oneArgErrorPatterns("wikisearch"), function()
 end)
 
 registry.add(util.oneArgPatterns("wikisearch"), function(message, query)
+    query = util.rtrim(query, "%.")
     return "https://love2d.org/w/index.php?title=Special%3ASearch&go=Go&search=" .. urlEncode(query)
 end, "!wikisearch <query>, wikisearch:<page>", "Search the wiki, e.g.: `!wikisearch setColor`")
