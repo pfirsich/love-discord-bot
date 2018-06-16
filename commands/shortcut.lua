@@ -2,8 +2,9 @@ local registry = require("./registry")
 local util = require("./util")
 
 local shortcuts = {
-    {shortcut = "dataja", expansion = "Don't ask to ask, just ask! - http://sol.gfxile.net/dontask.html"},
-    {shortcut = {"ssl", "tls"}, expansion = "löve does not have built-in SSL/TLS, but you can use this library instead: https://github.com/LPGhatguy/luajit-request/\nBackground info on why TLS is not included can be found here: https://bitbucket.org/rude/love/issues/363/add-ssl-tls-apis"},
+    {shortcut = "dataja", expansion = "Don't ask to ask, just ask! - <http://sol.gfxile.net/dontask.html>"},
+    {shortcut = {"ssl", "tls"}, expansion = "löve does not have built-in SSL/TLS, but you can use this library instead: <https://github.com/LPGhatguy/luajit-request/>\nBackground info on why TLS is not included can be found here: <https://bitbucket.org/rude/love/issues/363/add-ssl-tls-apis>",
+        helpText = "Information on the state of SSL/TLS in löve (<https://bitbucket.org/rude/love/issues/363/add-ssl-tls-apis>)"},
 }
 
 local function joinShorcuts(shortcut)
