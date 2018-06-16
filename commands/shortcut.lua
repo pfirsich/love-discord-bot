@@ -21,5 +21,5 @@ end
 for _, shortcut in ipairs(shortcuts) do
     registry.add(util.noArgPatterns(shortcut.shortcut), function()
         return shortcut.expansion
-    end, joinShorcuts(shortcut), shortcut.helpText or shortcut.expansion)
+    end, joinShorcuts(shortcut.shortcut), shortcut.helpText or shortcut.expansion)
 end
