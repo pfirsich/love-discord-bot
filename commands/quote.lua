@@ -25,4 +25,4 @@ registry.add(util.oneArgPatterns("quote", true), function(message, arg)
 
     return ("<@%d> said in %s at %s: \"\" - %s"):format(quoteMsg.author.id,
         tostring(quoteChannel.name), quoteMsg.timestamp, quoteMsg.content, message)
-end)
+end, "!quote <messageid> text, !quote <channelid>:<messageid> text", "Quote a message")
