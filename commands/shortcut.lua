@@ -3,7 +3,7 @@ local util = require("./util")
 
 local shortcuts = {
     {shortcut = "dataja", expansion = "Don't ask to ask, just ask! - <http://sol.gfxile.net/dontask.html>"},
-    {shortcut = "code", expansion = "You can embed code in Discord messages like this:\n\\`\\`\\`lua\n-- put code here\nprint(\"foo\")\n\\`\\`\\``\nwhich looks like this:\n```lua\n-- put code here\nprint(\"foo\")\n```",
+    {shortcut = "code", expansion = "You can embed code in Discord messages like this:\n\\`\\`\\`lua\n-- put code here\nprint(\"foo\")\n\\`\\`\\`\nwhich looks like this:\n```lua\n-- put code here\nprint(\"foo\")\n```",
         helpText = "How to embed code in Discord messages."},
     {shortcut = {"ssl", "tls"}, expansion = "löve does not have built-in SSL/TLS, but you can use this library instead: <https://github.com/LPGhatguy/luajit-request/>\nBackground info on why TLS is not included can be found here: <https://bitbucket.org/rude/love/issues/363/add-ssl-tls-apis>",
         helpText = "Information on the state of SSL/TLS in löve (<https://bitbucket.org/rude/love/issues/363/add-ssl-tls-apis>)"},
