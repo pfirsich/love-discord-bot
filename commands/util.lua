@@ -43,7 +43,7 @@ end
 
 function util.rtrim(str, pat)
     char = char or "%s"
-    return str:match("^([^" .. pat .. "]*)")
+    return str:match("^(.-)" .. pat .. "*$")
 end
 
 return util
