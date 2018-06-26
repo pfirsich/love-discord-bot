@@ -13,12 +13,12 @@ registry.add(util.oneArgPatterns("quote", true), function(message, arg)
         return "Wrong syntax."
     end
 
-    local quoteChannel = client:getChannel(tonumber(quoteChannelId))
+    local quoteChannel = client:getChannel(quoteChannelId)
     if not quoteChannel then
         return "Channel does not exist."
     end
 
-    local quoteMsg = quoteChannel:getMessage(tonumber(quoteMsgId))
+    local quoteMsg = quoteChannel:getMessage(quoteMsgId)
     if not quoteMsgId then
         return "Channel does not exist."
     end
