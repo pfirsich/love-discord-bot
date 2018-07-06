@@ -7,6 +7,7 @@ local shortcuts = {
         helpText = "How to embed code in Discord messages."},
     {shortcut = {"ssl", "tls"}, expansion = "löve does not have built-in SSL/TLS, but you can use this library instead: <https://github.com/LPGhatguy/luajit-request/>\nBackground info on why TLS is not included can be found here: <https://bitbucket.org/rude/love/issues/363/add-ssl-tls-apis>",
         helpText = "Information on the state of SSL/TLS in löve (<https://bitbucket.org/rude/love/issues/363/add-ssl-tls-apis>)"},
+    {shortcut = "bikeshed", expansion = "http://bikeshed.com/", helpText = "*\"1-indexing is the worst part about Lua\"*"},
 }
 
 local function joinShorcuts(shortcut)
