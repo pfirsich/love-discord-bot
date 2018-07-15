@@ -14,9 +14,11 @@ registry.add({"^!quote%s+(%S+)$", "^!quote%s+(%S+)%s+.*$"}, function(message, ar
     local quoteChannel, quoteMsg
     for guild in client.guilds:iter() do
         for channel in guild.textChannels:iter() do
-            quoteChannel = channel
             quoteMsg = channel:getMessage(quoteMsgId)
-            break
+            if quoteMsg then
+                quoteChannel = channel
+                break
+            end
         end
     end
 
