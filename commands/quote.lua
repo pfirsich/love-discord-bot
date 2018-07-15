@@ -3,27 +3,25 @@ local util = require("./util")
 local client = require("../client")
 
 registry.add({"^!quote%s+(%S+)$", "^!quote%s+(%S+)%s+.*$"}, function(message, arg)
-    local quoteChannelId, quoteMsgId = arg:match("^<?https://discordapp.com/channels/%d+/(%d+)/(%d+)>?$")
-    if not quoteChannelId or not quoteMsgId then
-        quoteChannelId, quoteMsgId = arg:match("^(%d+):(%d+)$")
-        if not quoteChannelId or not quoteMsgId then
-            quoteChannelId = message.channel.id
-            quoteMsgId = arg:match("^(%d+)$")
-        end
+    local quoteMsgId = arg:match("^<?https://discordapp.com/channels/%d+/%d+/(%d+)>?$")
+    if not quoteMsgId then
+        quoteMsgId = arg
     end
-
-    if not quoteChannelId or not quoteMsgId then
+    if not quoteMsgId:match("^%d+$") then
         return "Wrong syntax."
     end
 
-    local quoteChannel = client:getChannel(quoteChannelId)
-    if not quoteChannel then
-        return "Channel does not exist."
+    local quoteChannel, quoteMsg
+    for guild in client.guilds:iter() do
+        for channel in guild.textChannels:iter() do
+            quoteChannel = channel
+            quoteMsg = channel:getMessage(quoteMsgId)
+            break
+        end
     end
 
-    local quoteMsg = quoteChannel:getMessage(quoteMsgId)
     if not quoteMsg then
-        return "Message does not exist in this channel."
+        return "Message not found."
     end
 
     return ("<@%d> said in %s at %s:\n*%s*"):format(quoteMsg.author.id,
