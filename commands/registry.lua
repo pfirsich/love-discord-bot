@@ -1,3 +1,5 @@
+local util = require("./util")
+
 local registry = {}
 
 local entries = {}
@@ -42,7 +44,7 @@ local function entryCmp(a, b)
     end
 end
 
-registry.add("^!help%s*.*", function()
+registry.add(util.noArgPatterns("help"), function()
     table.sort(entries, entryCmp)
     local ret = ""
     for _, entry in ipairs(entries) do

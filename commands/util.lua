@@ -38,7 +38,7 @@ function util.oneArgPatterns(names, noInText)
 end
 
 function util.noArgPatterns(names)
-    return genPatterns({"!{name}$", "!{name}%W*"}, names)
+    return genPatterns({"^!{name}$", "^!{name}%s", "%s!{name}$", "%s!{name}%s"}, names)
 end
 
 function util.rtrim(str, pat)
