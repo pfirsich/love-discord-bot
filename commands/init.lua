@@ -8,5 +8,6 @@ require("./wiki")
 require("./info")
 require("./pingresponse")
 require("./quote")
+require("./showcase")
 
 return commands
